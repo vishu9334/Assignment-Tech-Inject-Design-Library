@@ -1,0 +1,68 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+enum Role {
+  ADMIN
+  CUSTOMER
+}
+
+enum AccessLevel {
+  FREE
+  PREMIUM
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+}
+
+model User {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  password     String
+  name         String
+  role         Role     @default(CUSTOMER)
+  isPremium    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Component {
+  id           String        @id @default(uuid())
+  slug         String        @unique
+  name         String
+  description  String
+  category     String
+  version      String        @default("1.0.0")
+  accessLevel  AccessLevel   @default(FREE)
+  status       PublishStatus @default(DRAFT)
+  code         String        @db.Text
+  usageExample String        @db.Text
+  agentPrompt  String        @db.Text
+  dependencies String[]      @default([])
+  propsDoc     Json?
+  thumbnailUrl String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@map("components")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  action    String
+  actor     String
+  target    String?
+  details   Json?
+  createdAt DateTime @default(now())
+
+  @@map("audit_logs")
+}

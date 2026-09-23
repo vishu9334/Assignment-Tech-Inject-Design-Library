@@ -1,0 +1,26 @@
+:root {
+  /* Sales CRM Theme Tokens */
+  --crm-bg-canvas: #0A0A0A;
+  --crm-bg-surface: #121212;
+  --crm-bg-surface-elevated: #181818;
+  --crm-bg-surface-hover: #222222;
+  
+  --crm-border-subtle: #242424;
+  --crm-border-medium: #333333;
+  --crm-border-strong: #444444;
+
+  --crm-text-primary: #FFFFFF;
+  --crm-text-secondary: #D4D4D4;
+  --crm-text-muted: #888888;
+  --crm-text-faint: #555555;
+
+  /* Accent & Pipeline States */
+  --crm-status-won: #16C89E;
+  --crm-status-lead: #FFDB4B;
+  --crm-status-negotiation: #9668FE;
+  --crm-status-lost: #FE4A8E;
+  --crm-status-active: #16C89E;
+
+  /* Tactile Bevel Shadow Token */
+  --crm-shadow-tactile: 0px 0px 0px 1px rgba(0,0,0,0.5), inset 0px 1px 0px 0px rgba(255,255,255,0.1), inset 0px 0px 0px 1px rgba(255,255,255,0.06);
+}

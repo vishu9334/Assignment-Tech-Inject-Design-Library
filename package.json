@@ -1,0 +1,23 @@
+{
+  "name": "tech-inject-design-system",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:catalogue": "npm --workspace=apps/catalogue run dev",
+    "dev:admin": "npm --workspace=apps/admin run dev",
+    "build:catalogue": "npm --workspace=apps/catalogue run build",
+    "build:admin": "npm --workspace=apps/admin run build",
+    "db:generate": "npm --workspace=packages/database run generate",
+    "db:push": "npm --workspace=packages/database run push",
+    "db:seed": "npm --workspace=packages/database run seed",
+    "test": "node tests/run-tests.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}

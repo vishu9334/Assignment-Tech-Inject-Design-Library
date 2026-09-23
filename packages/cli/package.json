@@ -1,0 +1,24 @@
+{
+  "name": "tech-inject-ui",
+  "version": "1.0.0",
+  "description": "Official CLI installer for Tech Inject Design Library",
+  "type": "module",
+  "bin": {
+    "tech-inject-ui": "./bin/index.js"
+  },
+  "main": "bin/index.js",
+  "files": [
+    "bin"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "keywords": [
+    "cli",
+    "components",
+    "react",
+    "typescript",
+    "esm",
+    "tech-inject"
+  ]
+}
