@@ -1,19 +1,21 @@
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "../src/prisma.ts";
 import bcrypt from "bcryptjs";
-
-const prisma = new PrismaClient();
 
 async function main() {
   console.log("Seeding database...");
 
-  // 1. Seed Accounts
+  // 1. Seed Accounts (Both .dev and .io sets for compatibility)
   const adminPassword = await bcrypt.hash("Admin@12345", 10);
   const freePassword = await bcrypt.hash("User@12345", 10);
   const premiumPassword = await bcrypt.hash("Premium@12345", 10);
 
-  const admin = await prisma.user.upsert({
+  const devAdminPassword = await bcrypt.hash("Admin@2026!", 10);
+  const devCustomerPassword = await bcrypt.hash("Customer@2026!", 10);
+
+  // .io accounts (used by test suite)
+  await prisma.user.upsert({
     where: { email: "admin@techinject.io" },
-    update: {},
+    update: { password: adminPassword, role: "ADMIN", isPremium: true },
     create: {
       email: "admin@techinject.io",
       name: "TechInject Admin",
@@ -23,9 +25,9 @@ async function main() {
     },
   });
 
-  const freeUser = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: "free@techinject.io" },
-    update: {},
+    update: { password: freePassword, role: "CUSTOMER", isPremium: false },
     create: {
       email: "free@techinject.io",
       name: "Free Developer",
@@ -35,9 +37,9 @@ async function main() {
     },
   });
 
-  const premiumUser = await prisma.user.upsert({
+  await prisma.user.upsert({
     where: { email: "premium@techinject.io" },
-    update: {},
+    update: { password: premiumPassword, role: "CUSTOMER", isPremium: true },
     create: {
       email: "premium@techinject.io",
       name: "Premium Enterprise Dev",
@@ -47,11 +49,44 @@ async function main() {
     },
   });
 
-  console.log("Users created:", {
-    admin: admin.email,
-    freeUser: freeUser.email,
-    premiumUser: premiumUser.email,
+  // .dev accounts (used by demo guide)
+  await prisma.user.upsert({
+    where: { email: "admin@techinject.dev" },
+    update: { password: devAdminPassword, role: "ADMIN", isPremium: true },
+    create: {
+      email: "admin@techinject.dev",
+      name: "TechInject Executive Admin",
+      password: devAdminPassword,
+      role: "ADMIN",
+      isPremium: true,
+    },
   });
+
+  await prisma.user.upsert({
+    where: { email: "customer.free@techinject.dev" },
+    update: { password: devCustomerPassword, role: "CUSTOMER", isPremium: false },
+    create: {
+      email: "customer.free@techinject.dev",
+      name: "Free Customer Dev",
+      password: devCustomerPassword,
+      role: "CUSTOMER",
+      isPremium: false,
+    },
+  });
+
+  await prisma.user.upsert({
+    where: { email: "customer.premium@techinject.dev" },
+    update: { password: devCustomerPassword, role: "CUSTOMER", isPremium: true },
+    create: {
+      email: "customer.premium@techinject.dev",
+      name: "Premium Customer Dev",
+      password: devCustomerPassword,
+      role: "CUSTOMER",
+      isPremium: true,
+    },
+  });
+
+  console.log("Users seeded successfully (.io and .dev accounts).");
 
   // 2. Components derived from Sales CRM Reference
   const components = [
