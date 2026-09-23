@@ -15,6 +15,7 @@
     "db:generate": "npm --workspace=packages/database run generate",
     "db:push": "npm --workspace=packages/database run push",
     "db:seed": "npm --workspace=packages/database run seed",
+    "postinstall": "npm --workspace=packages/database run generate",
     "test": "node tests/run-tests.js"
   },
   "devDependencies": {
