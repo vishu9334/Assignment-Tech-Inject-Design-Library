@@ -31,6 +31,7 @@ import {
   UserAvatar,
   KPIChart,
 } from "@tech-inject/ui";
+import { CodeHighlighter } from "@/components/CodeHighlighter";
 
 interface ComponentDetail {
   id: string;
@@ -543,30 +544,12 @@ export default function ComponentDetailPage() {
           <div className="p-6">
             {activeTab === "code" && (
               <div>
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-xs text-neutral-400 font-mono">
-                    components/ui/{component.name}.tsx
-                  </span>
-                  <button
-                    onClick={() => copyToClipboard(component.code || "", "code")}
-                    className="flex items-center gap-1.5 text-xs text-neutral-300 hover:text-white bg-[#1E1E1E] hover:bg-[#2A2A2A] px-3 py-1.5 rounded-lg border border-white/5 transition-all"
-                  >
-                    {copiedKey === "code" ? (
-                      <>
-                        <Check className="size-3.5 text-[#16C89E]" />
-                        <span className="text-[#16C89E]">Copied to Clipboard</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="size-3.5" />
-                        <span>Copy Component Code</span>
-                      </>
-                    )}
-                  </button>
-                </div>
-                <pre className="rounded-xl bg-[#0A0A0A] border border-[#222222] p-4 text-xs font-mono text-neutral-300 overflow-x-auto max-h-96">
-                  <code>{component.code}</code>
-                </pre>
+                <CodeHighlighter
+                  code={component.code || ""}
+                  filename={`components/ui/${component.name}.tsx`}
+                  language="TSX"
+                  maxHeight="max-h-[560px]"
+                />
               </div>
             )}
 
